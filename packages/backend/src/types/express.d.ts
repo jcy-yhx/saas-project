@@ -4,5 +4,9 @@ declare namespace Express {
       id: string;
       email: string;
     };
+    workspaceMember?: {
+      workspaceId: string;
+      role: string;
+    };
   }
 }

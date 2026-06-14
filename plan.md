@@ -119,15 +119,15 @@ AppShell (认证后)
 - **产出**：完整认证流 + OAuth，可登录看到 Dashboard
 - 📖 [学习文档](docs/phase-1-authentication.md)
 
-### Phase 2: 工作区 + 权限 (预计 4-5 天)
+### Phase 2: 工作区 + 权限 ✅ (完成日期: 2026-06-14)
 
-- [ ] Workspace + WorkspaceMember + Invitation 模型
-- [ ] CRUD + 成员管理 + 邀请 API
-- [ ] RBAC 中间件 (Owner/Admin/Member)
-- [ ] 邀请邮件 (nodemailer + Ethereal 开发预览)
-- [ ] 前端：DashboardPage, WorkspaceForm, MembersPage, InviteDialog
-- **产出**：多租户工作区，角色权限完整
-- 📖 **学习文档**：多租户数据隔离模式、RBAC 权限设计、中间件洋葱模型
+- [x] Workspace + WorkspaceMember + Invitation 模型
+- [x] CRUD + 成员管理 + 邀请 API (11 端点全部测试通过)
+- [x] RBAC 中间件 (Owner/Admin/Member + 数字层级)
+- [x] 邀请流程 (CUID token + email 绑定 + 7天过期)
+- [x] 前端：DashboardPage + AppShell 布局 + WorkspacePage + MembersPage + WorkspaceForm + InviteDialog + Settings + Profile
+- **产出**：多租户工作区，完整 RBAC 权限
+- 📖 [学习文档](docs/phase-2-workspaces.md)
 
 ### Phase 3: 看板 + 任务管理 (预计 5-6 天)
 

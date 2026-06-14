@@ -1,14 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
 import { useSessionCheck } from '@/api/auth';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import AppShell from '@/components/layout/AppShell';
 import AuthLayout from '@/components/layout/AuthLayout';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import OAuthCallbackPage from '@/pages/OAuthCallbackPage';
+import AcceptInvitationPage from '@/pages/AcceptInvitationPage';
 import DashboardPage from '@/pages/DashboardPage';
+import WorkspacePage from '@/pages/WorkspacePage';
+import MembersPage from '@/pages/MembersPage';
+import WorkspaceSettingsPage from '@/pages/WorkspaceSettingsPage';
+import ProfilePage from '@/pages/ProfilePage';
+import ProjectPlaceholder from '@/pages/ProjectPlaceholder';
 
 export default function App() {
-  // Fire session check on mount — tries to restore session from refresh cookie
+  // Attempt session restore from httpOnly refresh cookie
   useSessionCheck();
 
   return (
@@ -19,16 +26,29 @@ export default function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
-      {/* OAuth callback (no layout — just a spinner) */}
+      {/* OAuth callback */}
       <Route path="/oauth/callback" element={<OAuthCallbackPage />} />
 
-      {/* Protected routes */}
+      {/* Accept invitation (may require redirect to login) */}
+      <Route path="/invitations/:token" element={<AcceptInvitationPage />} />
+
+      {/* Protected app routes */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<DashboardPage />} />
-        {/* More routes added in Phase 2+ */}
+        <Route element={<AppShell />}>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+
+          {/* Workspace sub-routes */}
+          <Route path="/workspaces/:workspaceId" element={<WorkspacePage />}>
+            <Route index element={<ProjectPlaceholder />} />
+            <Route path="list" element={<ProjectPlaceholder />} />
+            <Route path="members" element={<MembersPage />} />
+            <Route path="settings" element={<WorkspaceSettingsPage />} />
+          </Route>
+        </Route>
       </Route>
 
-      {/* Catch-all */}
+      {/* 404 */}
       <Route path="*" element={
         <div className="flex min-h-screen items-center justify-center">
           <p className="text-muted-foreground">Page not found</p>

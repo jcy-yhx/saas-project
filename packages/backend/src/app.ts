@@ -7,6 +7,7 @@ import { config, getLogger } from './config/index.js';
 import { errorHandler } from './middleware/error-handler.js';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
+import workspaceRoutes from './routes/workspace.routes.js';
 
 const logger = getLogger();
 
@@ -63,11 +64,16 @@ export function createApp() {
   // Auth routes — tighter rate limit
   app.use('/api/auth', authLimiter, authRoutes);
 
+  // All other API routes — general rate limit
+  app.use(generalLimiter);
+
   // User routes
   app.use('/api/users', userRoutes);
 
-  // Other API routes (to be added in later phases)
-  app.use(generalLimiter);
+  // Workspace routes
+  app.use('/api/workspaces', workspaceRoutes);
+
+  // More API routes (to be added in later phases)
 
   // 404 handler
   app.use((_req, res) => {

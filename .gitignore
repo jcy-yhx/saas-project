@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files (contains secrets)
+.env
+.env.*
+!.env.example
+
+# Uploaded files (dev runtime data)
+uploads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE / Editor
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
+
+# Test coverage
+coverage/
+
+# Build caches
+.cache/
+.turbo/
+
+# Misc
+*.pid
+.tmp/
+tmp/
+# Prisma migrations are tracked — never ignore prisma/migrations/

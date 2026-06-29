@@ -10,6 +10,8 @@ import userRoutes from './routes/user.routes.js';
 import workspaceRoutes from './routes/workspace.routes.js';
 import projectRoutes from './routes/project.routes.js';
 import taskRoutes from './routes/task.routes.js';
+import commentRoutes from './routes/comment.routes.js';
+import notificationRoutes from './routes/notification.routes.js';
 
 const logger = getLogger();
 
@@ -82,6 +84,13 @@ export function createApp() {
   // Task routes (nested under projects + direct access)
   app.use('/api/projects/:projectId/tasks', taskRoutes);
   app.use('/api/tasks', taskRoutes);
+
+  // Comment routes
+  app.use('/api/tasks/:taskId/comments', commentRoutes);
+  app.use('/api/comments', commentRoutes);
+
+  // Notification routes
+  app.use('/api/notifications', notificationRoutes);
 
   // More API routes (to be added in later phases)
 

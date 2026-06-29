@@ -14,6 +14,7 @@ import WorkspaceSettingsPage from '@/pages/WorkspaceSettingsPage';
 import ProfilePage from '@/pages/ProfilePage';
 import ProjectPage from '@/pages/ProjectPage';
 import ProjectListPage from '@/pages/ProjectListPage';
+import NotificationsPage from '@/pages/NotificationsPage';
 
 export default function App() {
   // Attempt session restore from httpOnly refresh cookie
@@ -38,6 +39,7 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
 
           {/* Workspace sub-routes */}
           <Route path="/workspaces/:workspaceId" element={<WorkspacePage />}>

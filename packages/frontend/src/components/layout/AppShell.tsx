@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import WorkspaceForm from '@/components/workspace/WorkspaceForm';
 import WorkspaceCard from '@/components/workspace/WorkspaceCard';
 import { Plus, LogOut, Menu, X, User, LayoutDashboard } from 'lucide-react';
+import NotificationBell from '@/components/notification/NotificationBell';
 
 export default function AppShell() {
   const { workspaceId } = useParams();
@@ -79,6 +80,7 @@ export default function AppShell() {
           </button>
 
           <div className="flex items-center gap-3">
+            <NotificationBell />
             <span className="text-sm text-muted-foreground">{user?.email}</span>
             <Button variant="ghost" size="icon" onClick={() => navigate('/profile')} title="Profile">
               <User className="w-4 h-4" />

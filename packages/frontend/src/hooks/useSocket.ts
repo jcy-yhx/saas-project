@@ -3,6 +3,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getSocket, disconnectSocket } from '@/lib/socket';
 import { getAccessToken } from '@/lib/api-client';
 import { taskKeys } from '@/api/tasks';
+import { commentKeys } from '@/api/comments';
+import { notificationKeys } from '@/api/notifications';
 import { useAuthStore } from '@/stores/auth-store';
 
 /**
@@ -41,7 +43,16 @@ export function useSocket(workspaceId: string | undefined, projectId: string | u
       }
     };
 
-    // Task events → invalidate kanban data
+    const onCommentChanged = (data: { taskId: string }) => {
+      qc.invalidateQueries({ queryKey: commentKeys.byTask(data.taskId) });
+    };
+
+    const onNotification = () => {
+      qc.invalidateQueries({ queryKey: notificationKeys.list() });
+      qc.invalidateQueries({ queryKey: notificationKeys.count() });
+    };
+
+    // Task events
     socket.on('connect', onConnect);
     socket.on('task:created', onTaskChanged);
     socket.on('task:updated', onTaskChanged);
@@ -49,6 +60,12 @@ export function useSocket(workspaceId: string | undefined, projectId: string | u
     socket.on('task:moved', (data: { projectId: string }) => {
       qc.invalidateQueries({ queryKey: taskKeys.byStatus(data.projectId) });
     });
+
+    // Comment events
+    socket.on('comment:created', onCommentChanged);
+
+    // Notification events
+    socket.on('notification:new', onNotification);
 
     // Join rooms immediately if already connected
     if (socket.connected) {
@@ -61,6 +78,8 @@ export function useSocket(workspaceId: string | undefined, projectId: string | u
       socket.off('task:updated', onTaskChanged);
       socket.off('task:deleted', onTaskChanged);
       socket.off('task:moved');
+      socket.off('comment:created', onCommentChanged);
+      socket.off('notification:new', onNotification);
 
       // Leave rooms
       if (projectId) socket.emit('leave:project', { projectId });

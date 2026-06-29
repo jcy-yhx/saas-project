@@ -16,18 +16,39 @@ export function requireWorkspaceMembership(
   const userId = req.user?.id;
   if (!userId) { next(new UnauthenticatedError('Authentication required')); return; }
 
-  // Try direct workspaceId param, or resolve from projectId
+  // Try direct workspaceId param, or resolve from projectId or taskId
   const wsId = (req.params.id ?? req.params.workspaceId) as string | undefined;
   const pid = req.params.projectId as string | undefined;
+  const tid = req.params.taskId as string | undefined;
+  const cid = req.params.commentId as string | undefined;
 
   if (wsId) {
     checkMember(userId, wsId, req, next);
   } else if (pid) {
-    // Resolve workspace from project
     getPrisma().project.findUnique({ where: { id: pid } })
       .then((p) => {
         if (!p) throw new ForbiddenError('Project not found');
         return checkMember(userId, p.workspaceId, req, next);
+      })
+      .catch(next);
+  } else if (tid) {
+    getPrisma().task.findUnique({
+      where: { id: tid },
+      select: { project: { select: { workspaceId: true } } },
+    })
+      .then((t) => {
+        if (!t) throw new ForbiddenError('Task not found');
+        return checkMember(userId, t.project.workspaceId, req, next);
+      })
+      .catch(next);
+  } else if (cid) {
+    getPrisma().comment.findUnique({
+      where: { id: cid },
+      select: { task: { select: { project: { select: { workspaceId: true } } } } },
+    })
+      .then((c) => {
+        if (!c) throw new ForbiddenError('Comment not found');
+        return checkMember(userId, c.task.project.workspaceId, req, next);
       })
       .catch(next);
   } else {

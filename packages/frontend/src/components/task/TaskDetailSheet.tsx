@@ -1,6 +1,7 @@
 import { useTask, useUpdateTask, useDeleteTask, useAssignTask, useUnassignTask, type TaskStatus, type TaskPriority } from '@/api/tasks';
 import { useMembers } from '@/api/workspaces';
 import { useAuthStore } from '@/stores/auth-store';
+import CommentSection from '@/components/comment/CommentSection';
 import { Button } from '@/components/ui/button';
 import { X, Trash2, UserPlus, UserX, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
@@ -170,11 +171,9 @@ export default function TaskDetailSheet({ taskId, projectId, workspaceId, onClos
             )}
           </div>
 
-          {/* Comments placeholder (Phase 5) */}
+          {/* Comments */}
           <div className="pt-4 border-t">
-            <p className="text-sm text-muted-foreground">
-              Comments will be available in Phase 5.
-            </p>
+            <CommentSection taskId={task.id} />
           </div>
         </div>
       </div>

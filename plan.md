@@ -152,15 +152,16 @@ AppShell (认证后)
 - **产出**：多人实时同步，看板变化即时可见
 - 📖 [学习文档](docs/phase-4-realtime.md)
 
-### Phase 5: 评论 + 通知 (预计 3-4 天)
+### Phase 5: 评论 + 通知 ✅ (完成日期: 2026-06-29)
 
-- [ ] Comment + Notification 模型
-- [ ] 评论 CRUD API
-- [ ] 通知自动生成（分配/评论/状态变更时）
-- [ ] 前端：CommentList, NotificationBell, NotificationsPage
-- [ ] 实时评论推送
-- **产出**：完整评论系统 + 通知中心
-- 📖 **学习文档**：通知系统设计模式、Feed 流架构、实时消息推送策略
+- [x] Comment CRUD API (4 端点) + 仅作者编辑
+- [x] Notification 自动生成 (评论通知 + 多人批量创建)
+- [x] Notification API (列表/未读计数/标记已读/全部已读)
+- [x] authorize 中间件扩展 (taskId + commentId 反查 workspace)
+- [x] 前端: CommentSection + CommentItem (内联编辑) + NotificationBell + NotificationsPage
+- [x] Socket.IO 评论实时推送 + 通知轮询 (15s) 混合模式
+- **产出**：评论讨论线 + 通知中心 + 未读计数
+- 📖 [学习文档](docs/phase-5-comments-notifications.md)
 
 ### Phase 6: 文件上传 (预计 2-3 天)
 

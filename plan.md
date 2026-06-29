@@ -192,15 +192,16 @@ AppShell (认证后)
 - **产出**：28 测试通过，骨架屏/空状态/错误边界/t
 - 📖 [学习文档](docs/phase-8-testing-ux.md)
 
-### Phase 9: 部署 + 文档 (预计 3-4 天)
+### Phase 9: 部署 + 文档 ✅ (完成日期: 2026-06-29)
 
-- [ ] Dockerfile (后端多阶段构建 + 前端 Nginx)
-- [ ] docker-compose.prod.yml + nginx.conf
-- [ ] Swagger/Postman API 文档
-- [ ] README.md (架构图 + 快速开始 + 环境变量 + 部署指南)
-- [ ] GitHub Actions CI (lint → typecheck → test → build)
-- **产出**：一键部署，完整文档
-- 📖 **学习文档**：Docker 多阶段构建、Nginx 反向代理、CI/CD 流水线设计、API 文档规范
+- [x] Dockerfile.backend (多阶段: tsc build → node:24-alpine)
+- [x] Dockerfile.frontend (多阶段: vite build → nginx:1.27-alpine)
+- [x] nginx.conf (反向代理: /→SPA, /api→backend, /socket.io→WS, /uploads→files)
+- [x] docker-compose.prod.yml (4 services + healthcheck + auto-migrate entrypoint)
+- [x] .github/workflows/ci.yml (lint → typecheck → migrate → test)
+- [x] README.md (架构图 + 快速开始 + 环境变量表 + 部署指南)
+- **产出**：`docker compose up -d` 一键启动完整生产栈；28 tests CI 就绪
+- 📖 [学习文档](docs/phase-9-deployment.md)
 
 ---
 

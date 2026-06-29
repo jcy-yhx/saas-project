@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+uploads
+.env
+.env.*
+!.env.production.example
+.git
+*.md
+!docker-*.sh
+docs
+.idea
+.vscode
+coverage
+.cache
+*.log
+.turbo

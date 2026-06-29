@@ -174,13 +174,14 @@ AppShell (认证后)
 - **产出**：附件管理 + 头像上传，StorageProvider 可扩展
 - 📖 [学习文档](docs/phase-6-file-uploads.md)
 
-### Phase 7: 全文搜索 (预计 2-3 天)
+### Phase 7: 全文搜索 ✅ (完成日期: 2026-06-29)
 
-- [ ] PostgreSQL tsvector 生成列 + GIN 索引迁移
-- [ ] 搜索 API (to_tsquery, snippet 高亮)
-- [ ] 前端：SearchCommand (Cmd+K 搜索面板)
-- **产出**：全局搜索，关键词高亮
-- 📖 **学习文档**：PostgreSQL 全文搜索原理 (tsvector/tsquery/GIN)、倒排索引、中文分词方案
+- [x] PostgreSQL tsvector GENERATED ALWAYS 列 + GIN 索引 (raw SQL 迁移)
+- [x] 搜索 API (to_tsquery + ts_rank + ts_headline + 状态/优先级过滤)
+- [x] 权重设置 (title:A, description:B)
+- [x] 前端: SearchCommand (Cmd+K 面板, 键盘导航, HTML 高亮, 防抖)
+- **产出**：全局全文搜索，关键词高亮，相关性排序
+- 📖 [学习文档](docs/phase-7-search.md)
 
 ### Phase 8: 测试 + 打磨 (预计 4-5 天)
 

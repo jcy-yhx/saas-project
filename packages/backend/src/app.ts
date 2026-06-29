@@ -13,6 +13,7 @@ import taskRoutes from './routes/task.routes.js';
 import commentRoutes from './routes/comment.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
 import attachmentRoutes from './routes/attachment.routes.js';
+import searchRoutes from './routes/search.routes.js';
 
 const logger = getLogger();
 
@@ -96,6 +97,9 @@ export function createApp() {
   // Attachment routes
   app.use('/api/tasks/:taskId/attachments', attachmentRoutes);
   app.use('/api/attachments', attachmentRoutes);
+
+  // Search routes
+  app.use('/api/search', searchRoutes);
 
   // Serve uploaded files (avatars + attachments)
   app.use('/uploads', express.static(config.upload.dir));

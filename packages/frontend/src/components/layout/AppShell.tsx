@@ -6,8 +6,9 @@ import { useAuthStore } from '@/stores/auth-store';
 import { Button } from '@/components/ui/button';
 import WorkspaceForm from '@/components/workspace/WorkspaceForm';
 import WorkspaceCard from '@/components/workspace/WorkspaceCard';
-import { Plus, LogOut, Menu, X, User, LayoutDashboard } from 'lucide-react';
+import { Plus, LogOut, Menu, X, User, LayoutDashboard, Search } from 'lucide-react';
 import NotificationBell from '@/components/notification/NotificationBell';
+import SearchCommand from '@/components/common/SearchCommand';
 
 export default function AppShell() {
   const { workspaceId } = useParams();
@@ -19,6 +20,7 @@ export default function AppShell() {
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const handleLogout = async () => {
     await logoutMutation.mutateAsync();
@@ -80,6 +82,14 @@ export default function AppShell() {
           </button>
 
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/30 text-xs text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors min-w-[200px]"
+            >
+              <Search className="w-3.5 h-3.5" />
+              Search tasks...
+              <kbd className="ml-auto text-[10px] font-mono px-1 rounded bg-muted">⌘K</kbd>
+            </button>
             <NotificationBell />
             <span className="text-sm text-muted-foreground">{user?.email}</span>
             <Button variant="ghost" size="icon" onClick={() => navigate('/profile')} title="Profile">
@@ -98,6 +108,7 @@ export default function AppShell() {
       </div>
 
       <WorkspaceForm open={formOpen} onClose={() => setFormOpen(false)} />
+      <SearchCommand open={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   );
 }
